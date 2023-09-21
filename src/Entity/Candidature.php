@@ -19,7 +19,7 @@ class Candidature
 
     #[ORM\ManyToOne(inversedBy: 'candidatures')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?JobOffer $JobOffer = null;
+    private ?JobOffer $jobOffer = null;
 
     public function getId(): ?int
     {
@@ -40,12 +40,12 @@ class Candidature
 
     public function getJobOffer(): ?JobOffer
     {
-        return $this->JobOffer;
+        return $this->jobOffer;
     }
 
-    public function setJobOffer(?JobOffer $JobOffer): static
+    public function setJobOffer(?JobOffer $jobOffer): static
     {
-        $this->JobOffer = $JobOffer;
+        $this->jobOffer = $jobOffer;
 
         return $this;
     }

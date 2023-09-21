@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +17,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/register', name: 'app_register')]
+    #[Route('/user/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, 
     EntityManagerInterface $entityManager,MailerInterface $mailer): Response
     {
@@ -24,18 +25,25 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
+            
             // encode the plain password
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('plainPassword')->getData()
+                    $form->get('password')->getData()
                 )
             );
+            $candidate = new Candidat();
+            $user->setCandidat($candidate);
+            $candidate->setUser($user);
 
             $entityManager->persist($user);
             $entityManager->flush();
+            
             // do anything else you need here, like send an email
+            /*
             $email = (new Email())
             ->from('contact@luxury_services.com')
             ->to($user->getEmail())
@@ -49,11 +57,12 @@ class RegistrationController extends AbstractController
             <h2>Account created, good job</h2>
             <p>yoyoyoyoyoyoyoyooyoyoyoo</p>');
 
-        $mailer->send($email);
+            $mailer->send($email);
+            */
             return $this->redirectToRoute('app_login');
         }
 
-        return $this->render('registration/register.html.twig', [
+        return $this->render('user/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);
     }
