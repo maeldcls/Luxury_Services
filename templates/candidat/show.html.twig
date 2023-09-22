@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidat{% endblock %}
+
+{% block body %}
+    <h1>Candidat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ candidat.id }}</td>
+            </tr>
+            <tr>
+                <th>Gender</th>
+                <td>{{ candidat.gender }}</td>
+            </tr>
+            <tr>
+                <th>FirstName</th>
+                <td>{{ candidat.firstName }}</td>
+            </tr>
+            <tr>
+                <th>LastName</th>
+                <td>{{ candidat.lastName }}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{ candidat.adress }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ candidat.country }}</td>
+            </tr>
+            <tr>
+                <th>Nationality</th>
+                <td>{{ candidat.nationality }}</td>
+            </tr>
+            <tr>
+                <th>Passport</th>
+                <td>{{ candidat.passport }}</td>
+            </tr>
+            <tr>
+                <th>PassportFile</th>
+                <td>{{ candidat.passportFile }}</td>
+            </tr>
+            <tr>
+                <th>CV</th>
+                <td>{{ candidat.CV }}</td>
+            </tr>
+            <tr>
+                <th>ProfilePicture</th>
+                <td>{{ candidat.profilePicture }}</td>
+            </tr>
+            <tr>
+                <th>CurrentLocation</th>
+                <td>{{ candidat.currentLocation }}</td>
+            </tr>
+            <tr>
+                <th>BirthDate</th>
+                <td>{{ candidat.birthDate ? candidat.birthDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>BirthPlace</th>
+                <td>{{ candidat.birthPlace }}</td>
+            </tr>
+            <tr>
+                <th>Availibility</th>
+                <td>{{ candidat.availibility ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>JobCategory</th>
+                <td>{{ candidat.jobCategory }}</td>
+            </tr>
+            <tr>
+                <th>Experience</th>
+                <td>{{ candidat.experience }}</td>
+            </tr>
+            <tr>
+                <th>ShortDescription</th>
+                <td>{{ candidat.shortDescription }}</td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td>{{ candidat.notes }}</td>
+            </tr>
+            <tr>
+                <th>UploadedAt</th>
+                <td>{{ candidat.uploadedAt ? candidat.uploadedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ candidat.updatedAt ? candidat.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DeletedAt</th>
+                <td>{{ candidat.deletedAt ? candidat.deletedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Files</th>
+                <td>{{ candidat.files }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_candidat_index') }}">back to list</a>
+
+    <a href="{{ path('app_candidat_edit', {'id': candidat.id}) }}">edit</a>
+
+    {{ include('candidat/_delete_form.html.twig') }}
+{% endblock %}

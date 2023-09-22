@@ -62,6 +62,11 @@ class JobOffer
     {
         $this->candidatures = new ArrayCollection();
     }
+    
+    public function __toString(): string
+   {
+        return $this->reference . '' . $this->jobTitle;
+    }
 
     public function getId(): ?int
     {

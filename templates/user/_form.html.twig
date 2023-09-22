@@ -6,15 +6,22 @@
 	<span class="help-block">Type your email address.</span>
 </div>
 <div class="input-field">
-	{{form_row(registrationForm.password)}}
+	{{form_row(registrationForm.plainPassword.first)}}
 	<i class="fa fa-eye show-password"></i>
 	<span class="help-block">Type your password.</span>
 </div>
 <div class="input-field">
-	{{form_row(registrationForm.confirmPassword)}}
+	{{form_row(registrationForm.plainPassword.second)}}
 	<i class="fa fa-eye show-password"></i>
-	<span class="help-block">Confirm your password.</span>
+	<span class="help-block">Type your password.</span>
 </div>
+<div class="input-field">
+	
+
+{{ form_errors(registrationForm.plainPassword) }}
+</div>
+
+
 <div class="checkbox">
 	<input type="checkbox" name="accept-terms" value="1" id="accept-terms" required/>
 	<label for="accept-terms">I have read and I accept the

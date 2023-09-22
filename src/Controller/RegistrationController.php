@@ -32,16 +32,15 @@ class RegistrationController extends AbstractController
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
-                    $form->get('password')->getData()
+                    $form->get('plainPassword')->getData()
                 )
             );
             $candidate = new Candidat();
             $user->setCandidat($candidate);
-            $candidate->setUser($user);
-
+    
             $entityManager->persist($user);
             $entityManager->flush();
-            
+
             // do anything else you need here, like send an email
             /*
             $email = (new Email())

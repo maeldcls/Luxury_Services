@@ -2,16 +2,16 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Product;
+use App\Entity\JobOffer;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class ProductCrudController extends AbstractCrudController
+class JobOfferCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Product::class;
+        return JobOffer::class;
     }
 
     
@@ -19,8 +19,8 @@ class ProductCrudController extends AbstractCrudController
     {
         return [
 
-            TextField::new('name'),
-            IntegerField::new('price'),
+            TextField::new('reference'),
+            TextEditorField::new('description'),
         ];
     }
     

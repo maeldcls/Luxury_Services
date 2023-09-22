@@ -45,4 +45,5 @@ class CandidatureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }
