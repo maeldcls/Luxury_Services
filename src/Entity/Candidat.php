@@ -35,9 +35,6 @@ class Candidat
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $passport = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $passportFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -172,18 +169,6 @@ class Candidat
     public function setNationality(?string $nationality): static
     {
         $this->nationality = $nationality;
-
-        return $this;
-    }
-
-    public function getPassport(): ?string
-    {
-        return $this->passport;
-    }
-
-    public function setPassport(?string $passport): static
-    {
-        $this->passport = $passport;
 
         return $this;
     }

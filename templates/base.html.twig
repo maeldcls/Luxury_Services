@@ -86,19 +86,36 @@ $(handler);
 										<li>
 											<a href="{{ path('app_contact')}}">Contact</a>
 										</li>
-										<li>-</li>
+										{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+										<a href="{{ path('app_logout')}}">Logout</a>
 										<li>
 											<a href="/templates/auth/profile.html">Profile</a>
 										</li>
 										<li>
-										
-											<a href="/logout.html">Logout</a>
+										{% else %}
+											<a href="{{ path('app_login')}}">LogIn</a>
 										</li>
+										{% endif %}
 									</ul>
 								</nav>
 							</div>
 						</div>
+						
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+								<ul class="menuzord-menu pull-right light" role="navigation">
+								<li class=" dropdown">
+									<a target="_self" href="{{ path('app_logout')}}">
+										<span>logout</span>
+									</a>
+								</li>
+								<li class=" dropdown">
+									<a target="_self" href="/candidat/profile" class="btn bn-lg gradient secondary btn-block waves-effect waves-light btn-register">
+										<span>Profile</span>
+									</a>
+								</li>
+							</ul>
+						{% else %}
 							<ul class="menuzord-menu pull-right light" role="navigation">
 								<li class=" dropdown">
 									<a target="_self" href="{{ path('app_login')}}">
@@ -109,9 +126,11 @@ $(handler);
 									<a target="_self" href="{{ path('app_register')}}" class="btn bn-lg gradient secondary btn-block waves-effect waves-light btn-register">
 										<span>Sign Up</span>
 									</a>
-
 								</li>
 							</ul>
+						{% endif %}
+							
+						
 							<ul class="menuzord-menu pull-right light" role="navigation">
 								<li class="active dropdown">
 									<a target="_self" href="{{ path('app_home')}}">
