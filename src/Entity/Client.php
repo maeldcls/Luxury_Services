@@ -27,8 +27,8 @@ class Client
     #[ORM\Column(length: 255)]
     private ?string $position = null;
 
-    #[ORM\Column]
-    private ?int $contactNumber = null;
+    #[ORM\Column(length: 255)]
+    private ?string $contactNumber = null;
 
     #[ORM\Column(length: 255)]
     private ?string $contactMail = null;
@@ -97,12 +97,12 @@ class Client
         return $this;
     }
 
-    public function getContactNumber(): ?int
+    public function getContactNumber(): ?string
     {
         return $this->contactNumber;
     }
 
-    public function setContactNumber(int $contactNumber): static
+    public function setContactNumber(string $contactNumber): static
     {
         $this->contactNumber = $contactNumber;
 

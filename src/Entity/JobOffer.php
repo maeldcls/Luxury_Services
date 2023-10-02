@@ -50,7 +50,6 @@ class JobOffer
     private ?bool $activated = null;
 
     #[ORM\ManyToOne(inversedBy: 'jobOffers')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Client $client = null;
 
     #[ORM\OneToMany(mappedBy: 'JobOffer', targetEntity: Candidature::class)]

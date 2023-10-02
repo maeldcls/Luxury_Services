@@ -75,7 +75,11 @@ class CandidatType extends AbstractType
                 'label'=>''
             ])
             ->add('availibility', CheckboxType::class, [
-                'required' => false
+                'required' => true,
+                'attr' => [
+                'id'=>'keep-logged'
+                ],
+                
             ])
         ;
     }
