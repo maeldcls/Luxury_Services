@@ -2,11 +2,16 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
+use App\Entity\Candidature;
 use App\Entity\JobOffer;
+use App\Entity\User;
 use App\Form\JobOfferType;
+use App\Repository\CandidatureRepository;
 use App\Repository\JobOfferRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,10 +50,25 @@ class JobOfferController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'app_job_offer_show', methods: ['GET'])]
-    public function show(JobOffer $jobOffer): Response
+    public function show(Request $request, CandidatureRepository $candidatureRepository, JobOffer $jobOffer): Response
     {
+         /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+
+        $candidat = $user->getCandidat();
+
+        $candidature = new Candidature();
+        
+        $candidature = $candidatureRepository->findOneBy([
+            'candidat' => $candidat,
+            'jobOffer' => $jobOffer
+        ]);
+
         return $this->render('job_offer/show.html.twig', [
             'job_offer' => $jobOffer,
+            'candidature' => $candidature
         ]);
     }
 

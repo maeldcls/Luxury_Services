@@ -81,6 +81,16 @@ class CandidatType extends AbstractType
                 ],
                 
             ])
+            ->add('passportFile',FileType::class,[
+                'mapped' => false,
+                'required' => false,
+                'label'=>''
+            ])
+            ->add('CV',FileType::class,[
+                'mapped' => false,
+                'required' => false,
+                'label'=>''
+            ])
         ;
     }
 

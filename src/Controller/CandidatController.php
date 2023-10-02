@@ -26,6 +26,51 @@ class CandidatController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //processing profile pic
+            $directory ="./assets/profilePic/";
+            $file = $form['profilePicture']->getData();
+            if($file){
+                $extension = $file->guessExtension();
+
+            if (!$extension) {
+                $extension = 'bin';
+            }
+            $name = rand(1, 99999) .'.' . $extension;
+            $file->move($directory, $name);
+            $candidat->setProfilePicture($directory.$name);
+            }
+            
+
+            //processing passport
+            $directory ="./assets/passport/";
+            $file = $form['passportFile']->getData();
+
+            if($file){
+                $extension = $file->guessExtension();
+
+                if (!$extension) {
+                    $extension = 'bin';
+                }
+                $name = rand(1, 99999) .'.' . $extension;
+                $file->move($directory, $name);
+                $candidat->setPassportFile($directory.$name);
+            }
+            
+
+            //processing cv
+            $directory ="./assets/cv/";
+            $file = $form['CV']->getData();
+            if($file){
+                $extension = $file->guessExtension();
+
+                if (!$extension) {
+                    $extension = 'bin';
+                }
+                $name = rand(1, 99999) .'.' . $extension;
+                $file->move($directory, $name);
+                $candidat->setCV($directory.$name);
+            }
+           
 
             if($candidat->getUploadedAt() == null){
                 $candidat->setUploadedAt(new DateTimeImmutable());

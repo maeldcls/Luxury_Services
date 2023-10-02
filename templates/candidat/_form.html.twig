@@ -89,7 +89,15 @@
 							<span>
 								<i class="material-icons">&#xE24D;</i>
 								Passport</span>
-							<input id="passport" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="passport" type="file">
+								{{ form_widget(formProfile.passportFile, {
+									'attr': {
+										'id': 'passport',
+										'size': '20000000',
+										'accept': '.pdf,.jpg,.doc,.docx,.png,.gif',
+										'name': 'passport',
+										'type': 'file'
+									}
+								}) }}
 						</div>
 						<div class="existing-file">
 							<a href="#!" target="_blank">
@@ -106,7 +114,15 @@
 							<span>
 								<i class="material-icons">&#xE24D;</i>
 								CV</span>
-							<input id="cv" size="20000000" accept=".pdf,.jpg,.doc,.docx,.png,.gif" name="cv" type="file">
+								{{ form_widget(formProfile.CV, {
+									'attr': {
+										'id': 'cv',
+										'size': '20000000',
+										'accept': '.pdf,.jpg,.doc,.docx,.png,.gif',
+										'name': 'cv',
+										'type': 'file'
+									}
+								}) }}
 						</div>
 
 						<div class="existing-file">

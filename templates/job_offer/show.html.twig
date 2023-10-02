@@ -50,8 +50,12 @@
                                 <li><span> Location </span>{{ job_offer.location }}</li>
                                 <li><span> Starting date </span>{{ job_offer.closingDate|date('Y-m-d') }}</li>
                             </ul>
-                            <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_candidature_new')}}">Apply for this job</a>
+                          
+                            {% if candidature.candidat is not defined %}
+                            <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_candidature_new', {'id': job_offer.id}) }}">Apply for this job</a>
+                            {% else %}
                             <div class="btn btn-block btn-success mt-30 waves-effect waves-light disabled">You have applied for this job</div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
