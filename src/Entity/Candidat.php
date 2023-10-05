@@ -395,6 +395,11 @@ class Candidat
         return $this;
     }
 
+    public function getFullName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
     public function profileCompletion()
     {
         $completion = 0;

@@ -10,6 +10,7 @@ use App\Repository\JobOfferRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,5 +51,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('JobOffers', 'fa-solid fa-star', JobOffer::class);
         yield MenuItem::linkToCrud('Clients', 'fa-solid fa-star', Client::class);
         yield MenuItem::linkToCrud('Candidats', 'fa-solid fa-star', Candidat::class);
+        
     }
 }

@@ -19,9 +19,12 @@ class ClientCrudController extends AbstractCrudController
     {
         return [
             TextField::new('company_name'),
+            TextField::new('activity_type')->onlyOnForms(),
             TextField::new('contact_name'),
-            TextField::new('contact_mail'),
+            TextField::new('position')->onlyOnForms(),
             TextField::new('contact_number'),
+            TextField::new('contact_mail'),
+            TextField::new('notes')->onlyOnForms(),
         ];
     }
     

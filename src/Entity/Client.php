@@ -43,7 +43,10 @@ class Client
     {
         $this->jobOffers = new ArrayCollection();
     }
-
+    public function __toString(): string
+    {
+         return $this->companyName . ' // '. $this->contactName.' // '.$this->contactMail.' // '.$this->contactNumber;
+     }
     public function getId(): ?int
     {
         return $this->id;

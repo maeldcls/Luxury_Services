@@ -89,7 +89,7 @@
 							<span>
 								<i class="material-icons">&#xE24D;</i>
 								Passport</span>
-								{{ form_widget(formProfile.passportFile, {
+							{{ form_widget(formProfile.passportFile, {
 									'attr': {
 										'id': 'passport',
 										'size': '20000000',
@@ -114,7 +114,7 @@
 							<span>
 								<i class="material-icons">&#xE24D;</i>
 								CV</span>
-								{{ form_widget(formProfile.CV, {
+							{{ form_widget(formProfile.CV, {
 									'attr': {
 										'id': 'cv',
 										'size': '20000000',
@@ -137,7 +137,6 @@
 
 				</div>
 			</div>
-
 			<div class="col-xs-12 col-sm-6">
 				<div class="col-xs-12 col-sm-12">
 					<div class="input-field" style="margin-top: 5px;">
@@ -150,15 +149,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-xs-12 col-sm-6">
+					<div class="input-field">
+					{{form_row(formProfile.availibility)}}
+				</div>
+			</div>
 			<div class="col-xs-12 col-sm-12">
 				<div class="input-field">
 					{{form_row(formProfile.shortDescription)}}
 				</div>
 			</div>
-			<div class="checkbox">
+			
+			{# <div class="checkbox">
 				<input type="checkbox" id="keep-logged" name="remember" value="1"/>
 				<label for="keep-logged">Availbility</label>
-			</div>
+			</div> #}
+			
 
 
 			<button type="submit" class="btn btn-block btn-lg gradient secondary waves-effect waves-light">

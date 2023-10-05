@@ -37,11 +37,14 @@
             <div class="container">
                 <div class="row">
                     <div class="score-container">
+                    {% if candidat.profileCompletion == 100 %}
                         <h4>
                             <img src="{{ asset ('assets/img/profile.gif')}}" style="height: 80px; width: 201px;"> &nbsp;
                             &nbsp; Hooray ! Your profile is complete.
                         </h4>
-                        <p></p>
+                     {% else %}
+                     Profile Completion :   
+                    {% endif %}
                         <div class="c100 p100 small complete ">
                             <span>{{ candidat.profileCompletion }}%</span>
                             <div class="slice">
