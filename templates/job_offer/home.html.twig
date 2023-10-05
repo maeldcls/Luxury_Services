@@ -44,7 +44,7 @@
                     
                     <div class="portfolio portfolio-with-title col-2 gutter mt-30">
                        {% for jobOffer in job_offers %}
-                       <div class="portfolio-item" data-groups='["all", "commercial"]'>
+                       <div class="portfolio-item" data-groups='["all", "{{ jobOffer.jobCategory }}"]'>
                             <div class="portfolio-wrapper">
                                 <div class="card job-card">
                                     <div class="card-content">
@@ -67,7 +67,14 @@
                                     </div>
                                     <div class="card-action">
                                         <a class="btn btn-md primary border waves-effect waves-dark" href="/job/offer/show/{{jobOffer.id}}">Details</a>
-                                        <a class="btn btn-md primary waves-effect waves-light" href="#!">Apply</a>
+                                        {% if candidature.candidat is not defined and is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        <a class="btn btn-md primary waves-effect waves-light" href="{{ path('app_candidature_new', {'id': jobOffer.id}) }}">Apply</a>
+                                        {% elseif is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                        <div class="btn btn-block btn-success mt-30 waves-effect waves-light disabled">You have applied for this job</div>
+                                        {% else %}
+                                        <a class="btn btn-block gradient primary mt-30 waves-effect waves-light" href="{{ path('app_login') }}">Connect To apply</a>
+                                        {% endif %}
+                                        
                                     </div>
                                 </div>
                             </div>

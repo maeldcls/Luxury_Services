@@ -32,6 +32,7 @@ class JobOfferController extends AbstractController
     #[Route('/new', name: 'app_job_offer_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
         $jobOffer = new JobOffer();
         $form = $this->createForm(JobOfferType::class, $jobOffer);
         $form->handleRequest($request);
@@ -50,26 +51,81 @@ class JobOfferController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'app_job_offer_show', methods: ['GET'])]
-    public function show(Request $request, CandidatureRepository $candidatureRepository, JobOffer $jobOffer): Response
+    public function show(Request $request,JobOfferRepository $jobOfferRepository, CandidatureRepository $candidatureRepository, JobOffer $jobOffer): Response
     {
-         /**
-         * @var User $user
-         */
-        $user = $this->getUser();
+        $jobOffers = $jobOfferRepository->findBy(
+            ['activated' => true],
+            
+        );
 
-        $candidat = $user->getCandidat();
-
-        $candidature = new Candidature();
-        
-        $candidature = $candidatureRepository->findOneBy([
-            'candidat' => $candidat,
-            'jobOffer' => $jobOffer
-        ]);
-
+        if($this->getUser()){
+            /**
+             * @var User $user
+             */
+            $user = $this->getUser();
+            $candidat = $user->getCandidat();
+            $candidature = new Candidature();
+            
+            $candidature = $candidatureRepository->findOneBy([
+                'candidat' => $candidat,
+                'jobOffer' => $jobOffer
+            ]);  
+            return $this->render('job_offer/show.html.twig', [
+                'job_offer' => $jobOffer,
+                'candidature' => $candidature,
+            ]);
+        }
         return $this->render('job_offer/show.html.twig', [
+
             'job_offer' => $jobOffer,
-            'candidature' => $candidature
         ]);
+    }
+    #[Route('/show/next/{id}', name: 'app_job_offer_show_next', methods: ['GET'])]
+    public function showNext(Request $request,JobOfferRepository $jobOfferRepository, CandidatureRepository $candidatureRepository, JobOffer $jobOffer): Response
+    {
+        $id=0;
+        $nextId = 0;
+        $jobOffers = $jobOfferRepository->findBy(
+            ['activated' => true],
+            
+        );
+
+        foreach($jobOffers as $job){
+            if($job === $jobOffer){
+                $nextId = $id+1;
+            }
+            $id++;
+        }
+        if($nextId>= count($jobOffers)){
+            $nextId = 0;
+        }
+        
+        $jobz = $jobOffers[$nextId]; 
+        
+        return $this->redirectToRoute('app_job_offer_show',['id' => $jobz->getId()], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/show/previous/{id}', name: 'app_job_offer_show_previous', methods: ['GET'])]
+    public function showPrevious(Request $request,JobOfferRepository $jobOfferRepository, CandidatureRepository $candidatureRepository, JobOffer $jobOffer): Response
+    {
+         $jobOffers = $jobOfferRepository->findBy(
+            ['activated' => true],
+            
+        );
+        $id=0;
+
+        foreach($jobOffers as $job){
+            if($job === $jobOffer){
+                $previousId = $id-1;
+            }
+            $id++;
+        }
+        if($previousId<0){
+            $previousId = count($jobOffers)-1;
+        }
+        
+        $jobz = $jobOffers[$previousId]; 
+        
+        return $this->redirectToRoute('app_job_offer_show',['id' => $jobz->getId()], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}/edit', name: 'app_job_offer_edit', methods: ['GET', 'POST'])]
@@ -77,7 +133,7 @@ class JobOfferController extends AbstractController
     {
         $form = $this->createForm(JobOfferType::class, $jobOffer);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 

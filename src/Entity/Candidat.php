@@ -395,4 +395,55 @@ class Candidat
         return $this;
     }
 
+    public function profileCompletion()
+    {
+        $completion = 0;
+        if($this->gender != null){
+            $completion++;
+        }
+        if($this->firstName!= null){
+            $completion++;
+        }
+        if($this->lastName!= null){
+            $completion++;
+        }
+        if($this->adress != null){
+            $completion++;
+        }
+        if($this->country!= null){
+            $completion++;
+        }
+        if($this->nationality!= null){
+            $completion++;
+        }
+        if($this->passportFile!= null){
+            $completion++;
+        }
+        if($this->CV!= null){
+            $completion++;
+        }
+        if($this->profilePicture!= null){
+            $completion++;
+        }
+        if($this->currentLocation!= null){
+            $completion++;
+        }
+        if($this->birthDate!= null){
+            $completion++;
+        }
+        if($this->birthPlace!= null){
+            $completion++;
+        }
+        if($this->jobCategory!= null){
+            $completion++;
+        }
+        if($this->experience!= null){
+            $completion++;
+        }
+        if($this->shortDescription!= null){
+            $completion++;
+        }
+
+        return round($completion*100/15,0);
+    }
 }

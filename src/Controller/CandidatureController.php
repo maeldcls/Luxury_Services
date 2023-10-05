@@ -8,6 +8,7 @@ use App\Entity\JobOffer;
 use App\Form\CandidatureType;
 use App\Repository\CandidatRepository;
 use App\Repository\CandidatureRepository;
+use App\Repository\JobOfferRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -27,66 +28,44 @@ class CandidatureController extends AbstractController
     }
 
     #[Route('/new{id}', name: 'app_candidature_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security, JobOffer $jobOffer): Response
+    public function new(Request $request,JobOfferRepository $jobOfferRepository, CandidatureRepository $candidatureRepository, EntityManagerInterface $entityManager, Security $security, JobOffer $jobOffer): Response
     {
-         /**
-         * @var User $user
-         */
+        /**
+        * @var User $user
+        */
         $user = $this->getUser();
-
         $candidat = $user->getCandidat();
-        $candidature = new Candidature();
-
-        //remplissage entity candidature
-        $candidature->setJobOffer($jobOffer);
-        $candidature->setCandidat($candidat);
-
-        //remplissage table candidature
-        $form = $this->createForm(CandidatureType::class, $candidature);
-        $form->handleRequest($request);
-        $entityManager->persist($candidature);
-        $entityManager->flush();
-      
-        return $this->render('job_offer/show.html.twig', [
-            'job_offer' => $jobOffer,
-            'candidature'=>$candidature
+        $candidature = $candidatureRepository->findOneBy([
+            'candidat' => $candidat,
+            'jobOffer' => $jobOffer,
         ]);
-    }
+        
+        if($candidature == null){
 
-    #[Route('/{id}', name: 'app_candidature_show', methods: ['GET'])]
-    public function show(Candidature $candidature): Response
-    {
-        return $this->render('candidature/show.html.twig', [
-            'candidature' => $candidature,
-        ]);
-    }
+            $candidat = $user->getCandidat();
+            $candidature = new Candidature();
 
-    #[Route('/{id}/edit', name: 'app_candidature_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidature $candidature, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(CandidatureType::class, $candidature);
-        $form->handleRequest($request);
+            //remplissage entity candidature
+            $candidature->setJobOffer($jobOffer);
+            $candidature->setCandidat($candidat);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            //remplissage table candidature
+            $form = $this->createForm(CandidatureType::class, $candidature);
+            $form->handleRequest($request);
+            $entityManager->persist($candidature);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_candidature_index', [], Response::HTTP_SEE_OTHER);
+        
+            return $this->render('job_offer/show.html.twig', [
+                'candidat'=> $candidat,
+                'job_offer' => $jobOffer,
+                'candidature'=>$candidature
+            ]);
+        }else{
+            return $this->render('home/home.html.twig', [
+                'job_offers' => $jobOfferRepository->findAll(),
+            ]);
         }
 
-        return $this->render('candidature/edit.html.twig', [
-            'candidature' => $candidature,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_candidature_delete', methods: ['POST'])]
-    public function delete(Request $request, Candidature $candidature, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$candidature->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($candidature);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_candidature_index', [], Response::HTTP_SEE_OTHER);
+        
     }
 }
