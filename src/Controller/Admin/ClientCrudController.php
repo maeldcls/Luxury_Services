@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Client;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -19,12 +20,13 @@ class ClientCrudController extends AbstractCrudController
     {
         return [
             TextField::new('company_name'),
-            TextField::new('activity_type')->onlyOnForms(),
+            TextField::new('activity_type')->hideOnIndex(),
             TextField::new('contact_name'),
-            TextField::new('position')->onlyOnForms(),
+            TextField::new('position')->hideOnIndex(),
             TextField::new('contact_number'),
             TextField::new('contact_mail'),
-            TextField::new('notes')->onlyOnForms(),
+            TextareaField::new('notes')->hideOnIndex(),
+       
         ];
     }
     

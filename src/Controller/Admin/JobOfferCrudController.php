@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\JobOffer;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -22,19 +23,18 @@ class JobOfferCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-       
-            TextField::new('reference')->onlyOnForms() ,
-            TextField::new('description')->onlyOnForms() ,
-            TextField::new('notes')->onlyOnForms() ,
-            TextField::new('job_title'),
+            TextField::new('reference')->hideOnIndex() ,
+            TextField::new('description')->hideOnIndex() ,
+            TextField::new('notes')->hideOnIndex() ,
+            TextField::new('jobTitle')->setSortable(true),
             AssociationField::new('client')->autocomplete(),
-            TextField::new('job_type')->onlyOnForms() ,
-            TextField::new('location')->onlyOnForms() ,
-            TextField::new('job_category')->onlyOnForms() ,
-            IntegerField::new('activated'), 
-            DateField::new('creation_date') ,
-            DateField::new('closing_date'),
-            IntegerField::new('salary')->onlyOnForms() ,
+            TextField::new('job_type')->hideOnIndex() ,
+            TextField::new('location')->hideOnIndex() ,
+            TextField::new('job_category')->hideOnIndex() ,
+            BooleanField::new('activated'), 
+            DateField::new('creationDate')->setSortable(true),
+            DateField::new('closingDate')->setSortable(true),
+            IntegerField::new('salary')->hideOnIndex() ,
                 
         ];
     }

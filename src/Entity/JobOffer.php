@@ -64,7 +64,7 @@ class JobOffer
     
     public function __toString(): string
    {
-        return $this->reference . '' . $this->jobTitle;
+        return $this->reference . ' ' . $this->jobTitle;
     }
 
     public function getId(): ?int

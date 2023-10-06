@@ -88,12 +88,13 @@ class Candidat
 
 
 
-
-
-
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
+    }
+    public function __toString(): string
+   {
+        return $this->firstName . ' ' . $this->lastName;
     }
 
     public function getId(): ?int

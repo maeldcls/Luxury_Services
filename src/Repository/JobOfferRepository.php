@@ -20,7 +20,13 @@ class JobOfferRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, JobOffer::class);
     }
-
+    public function countJoboffer(): int
+    {
+        return $this->createQueryBuilder('j')
+            ->select('COUNT(j.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
     //    /**
     //     * @return JobOffer[] Returns an array of JobOffer objects
     //     */

@@ -6,6 +6,9 @@ use App\Entity\Candidat;
 use App\Entity\Candidature;
 use App\Entity\Client;
 use App\Entity\JobOffer;
+use App\Repository\CandidatRepository;
+use App\Repository\CandidatureRepository;
+use App\Repository\ClientRepository;
 use App\Repository\JobOfferRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -18,9 +21,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin')]
+    public function __construct(CandidatRepository $candidatRepository, JobOfferRepository $jobOfferRepository, 
+    CandidatureRepository $candidatureRepository, ClientRepository $clientRepository)
+    {
+        $this->candidatRepository = $candidatRepository;
+        $this->jobOfferRepository = $jobOfferRepository;
+        $this->candidatureRepository = $candidatureRepository;
+        $this->clientRepository = $clientRepository;
+    }
+    #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-    
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
          //$adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
@@ -35,8 +46,16 @@ class DashboardController extends AbstractDashboardController
         // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
-
-        return $this->render('admin/dashboard.html.twig');
+        $numberCandidat = $this->candidatRepository->countCandidat();
+        $numberJobOffer = $this->jobOfferRepository->countJobOffer();
+        $numberCandidature = $this->candidatureRepository->countCandidature();
+        $numberClient = $this->clientRepository->countClient();
+        return $this->render('admin/dashboard.html.twig', [
+            'numberCandidat' => $numberCandidat,
+            'numberJobOffer' => $numberJobOffer,
+            'numberCandidature'=> $numberCandidature,
+            'numberClient'=> $numberClient
+        ]);
     }
 
     public function configureDashboard(): Dashboard
@@ -48,9 +67,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('JobOffers', 'fa-solid fa-star', JobOffer::class);
-        yield MenuItem::linkToCrud('Clients', 'fa-solid fa-star', Client::class);
-        yield MenuItem::linkToCrud('Candidats', 'fa-solid fa-star', Candidat::class);
-        
+        yield MenuItem::linkToCrud('JobOffers', 'fa-solid fa-envelope', JobOffer::class);
+        yield MenuItem::linkToCrud('Clients', 'fa-solid fa-building', Client::class);
+        yield MenuItem::linkToCrud('Candidats', 'fa-solid fa-user', Candidat::class);
+        yield MenuItem::linkToCrud('Candidatures', 'fa-solid fa-file', Candidature::class);
     }
 }
